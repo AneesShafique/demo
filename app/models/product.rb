@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   validates :title, presence: true
   validates :quantity, numericality: { greater_than: 0 }
   validates_associated :reviews, :line_items
+  after_create_commit {BroadcastProductJob.perform_later self}
 
   private
 

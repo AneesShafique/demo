@@ -38,6 +38,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product created.' }
+        format.js
       else
         format.html { render :new }
       end

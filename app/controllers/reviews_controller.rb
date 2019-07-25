@@ -22,7 +22,7 @@ class ReviewsController < ApplicationController
     respond_to do |format|
       if @review.save
         format.html { redirect_to @product, notice: 'Review was successfully created.' }
-        format.js { render :create }
+        format.js
       else
         format.html { render :new }
       end
