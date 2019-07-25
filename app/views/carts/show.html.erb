@@ -1,0 +1,43 @@
+<div class="keep-shopping pv1 mt4 has-text-right">
+  <%= link_to "Keep Shopping", products_path, class: "btn btn-warning"%>
+</div>
+<hr>
+<section class="section">
+  <%= render(@cart.line_items) %>
+  <div class="columns">
+    <div class="column">
+      <%= button_to 'Empty Cart', @cart, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-warning" %>
+    </div>
+    <div class="column total ha-text-right">
+      <h4 class ="title is-4">
+        <span id= "total_prize" class="f5 has-tet-grey">Total:</span><div id = "grandTotal"> <%= number_to_currency(@cart.total_price) %></div>
+      </h4>
+    </div>
+
+  </div>
+  
+  <%= form_tag charges_path do %>
+    <article>
+      <% if flash[:error].present? %>
+        <div id="error_explanation">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
+    </article>
+    <p>
+      <%= label_tag(:couponCode, 'Coupon:') %>
+      <%= text_field_tag(:couponCode) %>
+    </p>
+
+    <% if user_signed_in? %>
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-email= <%=current_user.email%>
+              data-amount= @cart.total_prize
+              data-locale="auto"></script>
+    <% else %>
+       <%= link_to "Sign In for Checkout", new_user_session_path(redirect_to: cart_path(@cart)), class: "btn btn-warning" %>
+    <% end %>
+  <% end %>
+
+</section>

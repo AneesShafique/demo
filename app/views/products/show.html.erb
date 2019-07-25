@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
+        <% @product.images.each do |img| %>
+          <%= image_tag img, style: "width: 350px; border:2px solid #021a40; margin-top:10px; margin-bottom:10px" %>
+          <% if can? :update, @product %>
+            <%= link_to "x", remove_attachment_product_path(@product, img: img), method: :delete %>
+          <% end %>
+        <% end %>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><strong>Serial Number:</strong></td>
+                <td><%= Product.find(@product.id).serial_number %></td>
+              </tr>
+              <tr>
+                <td><strong>Title:</strong></td>
+                <td><%= @product.title %></td>
+              </tr>
+              <tr>
+                <td><strong>Description:</strong></td>
+                <td><%= @product.description %></td>
+              </tr>
+              <tr>
+                <td><strong>Price $ :</strong></td>
+                <td><%= @product.price %></td>
+              </tr>
+              <tr>
+                <td><strong>Quantity left:</strong></td>
+                <td><%= @product.quantity %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <% if !can? :update, @product %>
+          <div>
+            <%= button_to 'Add to cart', line_items_path(product_id: @product), class: "btn btn-warning"%>
+          </div>
+        <% end %>
+        <% if can? :update, @product %>
+          <div class = "btn btn-warning">
+            <%= link_to 'Edit your Product', edit_product_path(@product) %>          
+          </div>
+        <% end %>    
+      </div>
+      <div class="col-md-7 col-md-offset-1">
+        <h1><%= "Comments" %></h1>
+        <div id = "reviews">  
+          <% @reviews.reverse_each do |review| %>
+            <div class="reviews">
+              <h4><%= User.find(review.user_id).name %></h4>
+              <p id="inner"><%= review.comment %></p>
+              <%= link_to 'Delete', [@product, review], :method => :delete %><hr>
+            </div>
+          <% end %>
+        </div>
+        <% if user_signed_in? %>
+          <% if !can? :update, @product %>
+            <%= form_for(@product.reviews.build, url: product_reviews_path(@product), remote: true) do |form| %>
+              <div class="field">
+                <%= form.text_area :comment %>
+              </div>
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

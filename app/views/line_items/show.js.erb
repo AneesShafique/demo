@@ -1,0 +1,15 @@
+var currentId = "<%= "#line_item_" + @line_item.id.to_s %>"
+
+var currValue = parseInt($(currentId).find("#item_quantity").text())
+<% if action == "create" %>
+  var newValue = currValue + 1
+  $(currentId).find("#item_quantity").text(newValue)
+<% else %>
+  if (currValue > 1){
+    var newValue = currValue - 1
+    $(currentId).find("#item_quantity").text(newValue)
+  }
+<% end %>
+
+$(currentId).find("#total").text("<%= get_total(@line_item) %>")
+$("#grandTotal").text( "<%= grand_total() %>")

@@ -1,0 +1,30 @@
+<% @cart.status = 1 %>
+<% @cart.save! %>
+<p>
+  <label class="subtotal">
+    <span>Subtotal: <%= number_to_currency(@amount) %></span>
+  </label>
+</p>
+<% if @discount.present? %>
+  <p>
+    <label class="coupon">
+      <span>Coupon: <%= @code %></span>
+    </label>
+  </p>
+  <p>
+    <label class="savings">
+      <span>Savings: <%= number_to_currency(@discount_amount) %></span>
+    </label>
+  </p>
+  <p>
+    <label class="discount">
+      <span>Discount: <%= (@discount * 100).to_s + '%' %></span>
+    </label>
+  </p>
+<% end %>
+<p>
+  <label class="total">
+    <span>Total: <%= number_to_currency(@final_amount) %></span>
+  </label>
+</p>
+<%= link_to "Home", :root, class: "btn btn-warning" %>
