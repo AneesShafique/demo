@@ -10,7 +10,11 @@ module ApplicationHelper
   end
 
   def user_avatar(user)
-    user.image.url(:thumb)
+    if user.image.present?
+      user.image.url(:thumb)
+    else
+      'default.jpg'
+    end
   end
 
   def get_total(line_item)

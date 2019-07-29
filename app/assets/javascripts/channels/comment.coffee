@@ -8,5 +8,6 @@ App.comment = App.cable.subscriptions.create "CommentChannel",
   received: (data) ->
     $('#reviews').append "<h4>#{data.name}</h4>"
     $('#reviews').append "<p>#{data.comment}</p>"
-    $('#reviews').append( "<a href='/products/#{data.pid}/reviews/#{data.cid}' data-method = delete rel = 'no-follow' >Delete</a><hr>")
-
+    $('textarea').val('')
+    $('#reviews').append( "<a href='/products/#{data.pid}/reviews/#{data.cid}' data-method = delete rel = 'no-follow' >Delete</a>")
+    $('#reviews').append("<hr>")

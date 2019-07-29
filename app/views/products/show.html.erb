@@ -52,7 +52,10 @@
             <div class="reviews">
               <h4><%= User.find(review.user_id).name %></h4>
               <p id="inner"><%= review.comment %></p>
-              <%= link_to 'Delete', [@product, review], :method => :delete %><hr>
+              <% if can? :update, review %>
+                <%= link_to 'Delete', [@product, review], :method => :delete, remote: true %>
+              <% end %>
+              <hr>
             </div>
           <% end %>
         </div>

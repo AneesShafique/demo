@@ -2,7 +2,7 @@
   <div class="container">
     <div class="navbar-header">
       <% if user_signed_in? %>
-        <%= image_tag user_avatar(current_user)  %>
+        <%= link_to (image_tag user_avatar(current_user), :style =>"border-radius: 50%; height: 50px; width: 50px; margin-top: 5px"), edit_user_registration_path %>
       <% end %>
       <button type="button" class="navbar-toggle collapse" data-toggle="collapse" sata-target="#bs-example-navbar-collapse-1">
         <span class-"sr-only">Toggle navigation</span>
@@ -16,7 +16,6 @@
       <ul class="nav navbar-nav">
         <%if user_signed_in? %>
           <li><%= link_to "New Product", new_product_path, class: "active" %></li>
-          <li><%= link_to "Account", edit_user_registration_path %></li>
           <li><%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %>
         <% else %>
           <li><%= link_to "Sign Up", new_user_registration_path, class: "active" %></li>
@@ -30,8 +29,8 @@
         <p>
           <%= text_field_tag :search, params[:search], class: "form-control"%>
           <%= submit_tag "Search", name: nil, class: "btn btn-default" %>
-          </p>
-        </div>
+        </p>
+      </div>
       <% end %>
     </div>
   </div>
